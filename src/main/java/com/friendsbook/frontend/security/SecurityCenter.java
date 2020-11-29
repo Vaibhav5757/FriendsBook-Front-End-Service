@@ -31,11 +31,4 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.and()
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
-	
-	// make these urls public
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web.ignoring()
-			.antMatchers("/user/sign-up");
-	}
 }
