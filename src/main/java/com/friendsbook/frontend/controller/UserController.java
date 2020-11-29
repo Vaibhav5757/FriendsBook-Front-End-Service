@@ -24,9 +24,9 @@ public class UserController {
 	
 	private RestTemplate http;
 	
-	@Value("${USER_SERVICE_USERNAME}")
+	@Value("${userservice.api.username}")
 	private String userServiceBasicAuthUsername;
-	@Value("${USER_SERVICE_PASSWORD}")
+	@Value("${userservice.api.password}")
 	private String userServiceBasicAuthUserPassword;
 	
 	String userSeviceAuthStr = userServiceBasicAuthUsername + ":" + userServiceBasicAuthUserPassword;
