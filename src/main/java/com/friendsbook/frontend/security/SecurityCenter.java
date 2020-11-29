@@ -19,7 +19,6 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-			.httpBasic().disable() // disable http basic authentication type
 			.csrf().disable()// disable cross site request forgery
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
