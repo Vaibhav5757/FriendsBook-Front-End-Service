@@ -19,15 +19,9 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		
 		http
-			.httpBasic()
-			.disable();
-		
-		http
-			.formLogin().disable()
-			.logout().disable();
-		
-		http
-			.httpBasic().disable()
+			.httpBasic().disable() // disable basic http
+			.formLogin().disable() // disable login page
+			.logout().disable() // disable logout
 			.csrf().disable()// disable cross site request forgery
 			.cors().disable()// disable cors
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
