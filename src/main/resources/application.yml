@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: ${USER_DATABASE_URL}
+    username: ${USER_DATABASE_USERNAME}
+    password: ${USER_DATABASE_PASSWORD}
+    driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME}
+userservice:
+  api:
+    username: ${USER_SERVICE_USERNAME}
+    password: ${USER_SERVICE_PASSWORD}
