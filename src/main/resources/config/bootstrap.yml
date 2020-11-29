@@ -1,4 +1,4 @@
 spring:
   application:
-    name: Eureka-Server
+    name: Front-End-Service
   cloud:    config:      uri:      - https://friendsbook-config-server.herokuapp.com/
