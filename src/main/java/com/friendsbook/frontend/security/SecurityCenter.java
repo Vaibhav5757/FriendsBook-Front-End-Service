@@ -21,13 +21,11 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 		http
 			.httpBasic().disable() // disable http basic authentication type
 			.csrf().disable()// disable cross site request forgery
-//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//			.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.and()
 			.authorizeRequests()// authorize requests
-			.antMatchers("/user/sign-up").permitAll()
 			.antMatchers("/user/**").hasRole("USER")
 			.antMatchers("/admin/**").hasRole("ADMIN")
-			.antMatchers("/user/sign-up").permitAll()
 			.and()
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
