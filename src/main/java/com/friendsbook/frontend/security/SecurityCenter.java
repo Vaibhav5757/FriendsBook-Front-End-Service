@@ -27,6 +27,7 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.antMatchers("/user/sign-up").permitAll()
 			.antMatchers("/user/**").hasRole("USER")
 			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/user/sign-up").permitAll()
 			.and()
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
