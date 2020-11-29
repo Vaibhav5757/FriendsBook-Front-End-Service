@@ -3,6 +3,7 @@ package com.friendsbook.frontend.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -25,8 +26,14 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()// authorize requests
 			.antMatchers("/user/**").hasRole("USER")
 			.antMatchers("/admin/**").hasRole("ADMIN")
-			.antMatchers("/user/sign-up").permitAll() // make these url(s) public
 			.and()
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+	}
+	
+	// make these urls public
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring()
+			.antMatchers("/user/sign-up");
 	}
 }
