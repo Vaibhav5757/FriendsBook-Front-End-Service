@@ -23,6 +23,7 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()// authorize requests
+			.antMatchers("/user/sign-up").permitAll()
 			.antMatchers("/user/**").hasRole("USER")
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.and()
