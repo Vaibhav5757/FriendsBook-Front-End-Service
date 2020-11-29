@@ -21,13 +21,13 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 		http
 			.httpBasic().disable()
 			.csrf().disable()// disable cross site request forgery
-			.cors().disable()
+			.cors().disable()// disable cors
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()// authorize requests
+			.antMatchers("/user/sign-up").permitAll()// allow these url(s) to be public
 			.antMatchers("/user/*").hasRole("USER")
 			.antMatchers("/admin/*").hasRole("ADMIN")
-			.antMatchers("/user/sign-up").permitAll()
 			.and()
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
