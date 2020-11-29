@@ -17,6 +17,11 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
+		http
+			.formLogin().disable()
+			.logout().disable();
+		
 		http
 			.httpBasic().disable()
 			.csrf().disable()// disable cross site request forgery
@@ -25,8 +30,8 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.and()
 			.authorizeRequests()// authorize requests
 			.antMatchers("/user/sign-up").permitAll()// allow these url(s) to be public
-//			.antMatchers("/user/*").hasRole("USER")
-//			.antMatchers("/admin/*").hasRole("ADMIN")
+			.antMatchers("/user/*").hasRole("USER")
+			.antMatchers("/admin/*").hasRole("ADMIN")
 			.and()
 			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
