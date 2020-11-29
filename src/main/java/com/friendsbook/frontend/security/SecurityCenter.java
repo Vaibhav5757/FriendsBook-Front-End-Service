@@ -21,6 +21,7 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 		http
 			.httpBasic().disable()
 			.csrf().disable()// disable cross site request forgery
+			.cors().disable()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()// authorize requests
