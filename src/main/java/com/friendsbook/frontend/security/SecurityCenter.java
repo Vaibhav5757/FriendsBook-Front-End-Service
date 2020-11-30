@@ -1,5 +1,9 @@
 package com.friendsbook.frontend.security;
 
+import javax.annotation.PostConstruct;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityCenter extends WebSecurityConfigurerAdapter {
 	
+	private Logger logger = LoggerFactory.getLogger(SecurityCenter.class);
+	
+	@PostConstruct
+	private void postConstruct() {
+		logger.info("Security Center created");
+	}
+	
 	@Autowired
 	private JWTFilter jwtFilter;
 	
@@ -24,14 +35,17 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.formLogin().disable() // disable login page
 			.logout().disable() // disable logout
 			.csrf().disable() // disable cross site request forgery
-			.cors().disable() // disable cors
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			.cors() // enable cors
+			.and()
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
 			.and()
 			.authorizeRequests()// authorize requests
+			.antMatchers("/user/sign-up").permitAll()
 			.antMatchers("/user/*").hasRole("USER")
 			.antMatchers("/admin/*").hasRole("ADMIN")
 			.and()
-			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+			.httpBasic().disable();
 	}
 	
 	// allow these url(s) to be public

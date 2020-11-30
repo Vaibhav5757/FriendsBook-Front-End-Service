@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import com.friendsbook.frontend.model.UserDetails;
 import com.friendsbook.frontend.service.UserDetailsService;
 
+@Component
 public class JWTFilter extends GenericFilter{
 
 	/**
