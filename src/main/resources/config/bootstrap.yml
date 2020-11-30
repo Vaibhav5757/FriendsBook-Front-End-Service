@@ -1,4 +1,4 @@
 spring:
   application:
     name: Front-End-Service
-  cloud:    config:      uri:      - https://friendsbook-config-server.herokuapp.com/
+  cloud:    config:      uri:      - ${CONFIG-SERVER-URL}
