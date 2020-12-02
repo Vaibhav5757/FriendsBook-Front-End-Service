@@ -16,7 +16,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.friendsbook.frontend.controller.UserController;
 import com.friendsbook.frontend.model.User;
-import com.friendsbook.util.ApiResponse;
+import com.friendsbook.frontend.util.ApiResponse;
 
 @Service
 public class UserService {

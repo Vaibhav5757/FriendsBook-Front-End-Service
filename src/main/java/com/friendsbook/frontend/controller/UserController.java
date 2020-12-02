@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.friendsbook.frontend.model.User;
 import com.friendsbook.frontend.service.UserService;
-import com.friendsbook.util.ApiResponse;
+import com.friendsbook.frontend.util.ApiResponse;
 
 @RestController
 @RequestMapping("/user")

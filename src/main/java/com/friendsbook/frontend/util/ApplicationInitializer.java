@@ -1,4 +1,4 @@
-package com.friendsbook.util;
+package com.friendsbook.frontend.util;
 
 public class ApplicationInitializer{
 
