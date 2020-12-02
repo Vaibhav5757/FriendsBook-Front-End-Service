@@ -23,6 +23,7 @@ public class UserController {
 		return this.usrSvc.createUser(obj);
 	}
 	
+	@PostMapping(value = "/log-in", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<ApiResponse> login(@RequestBody LoginBody obj){
 		return this.usrSvc.login(obj);
 	}
