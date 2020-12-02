@@ -35,8 +35,7 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.formLogin().disable() // disable login page
 			.logout().disable() // disable logout
 			.csrf().disable() // disable cross site request forgery
-			.cors() // enable cors
-			.and()
+			.cors().disable() // disable cors
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
 			.and()
 			.authorizeRequests()// authorize requests
