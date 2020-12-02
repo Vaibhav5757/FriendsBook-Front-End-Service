@@ -18,7 +18,7 @@ public class UserController {
 	@Autowired
 	private UserService usrSvc;
 
-	@PostMapping(value = "/sign-up", consumes = "application/json", produces = "application/json")
+	@PostMapping(value = "/sign-up")
 	public ResponseEntity<ApiResponse> createUser(@RequestBody User obj){
 		return this.usrSvc.createUser(obj);
 	}
