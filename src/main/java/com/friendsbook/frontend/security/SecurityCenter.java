@@ -52,6 +52,7 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web
 			.ignoring()
-			.antMatchers("/user/sign-up");
+			.antMatchers("/user/sign-up")
+			.antMatchers("/user/log-in");
 	}
 }
