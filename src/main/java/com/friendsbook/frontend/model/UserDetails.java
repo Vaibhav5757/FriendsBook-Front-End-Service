@@ -1,6 +1,7 @@
 package com.friendsbook.frontend.model;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	
 	
 	private String username, password;
+	private boolean locked;
+	private Date lastPasswordUpdate;
 	
 	private Collection<? extends GrantedAuthority> authorities;
 	
@@ -22,6 +25,8 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		UserDetails usrDetails = new UserDetails();
 		usrDetails.setUsername(obj.getEmail());
 		usrDetails.setPassword(obj.getPassword());
+		usrDetails.setLocked(obj.isAccountLocked());
+		usrDetails.setLastPasswordUpdate(obj.getLastPasswordUpdated());
 		// assign authorities
 		usrDetails.setAuthorities(obj.getRoles().stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList()));
 	}
@@ -58,13 +63,14 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	@Override
 	public boolean isAccountNonLocked() {
 		// TODO Auto-generated method stub
-		return true;
+		return !this.locked;
 	}
 
+	// expire password after 90 days
 	@Override
 	public boolean isCredentialsNonExpired() {
 		// TODO Auto-generated method stub
-		return true;
+		return this.lastPasswordUpdate.getTime() < (new Date().getTime() - (90 * 24 * 60 * 60 * 1000));
 	}
 
 	@Override

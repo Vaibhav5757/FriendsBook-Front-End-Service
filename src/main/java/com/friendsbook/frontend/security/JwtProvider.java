@@ -4,18 +4,28 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.friendsbook.frontend.util.UnauthorizedException;
+
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 @Component
 public class JwtProvider {
 	
 	@Value("${jwt.secret}")
 	private String jwtKey;
+	
+	private Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
 	public String generateToken(String email) {
 		Date expirationDate = Date.from(LocalDate.now().plusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant());// After 10 days token will expire
@@ -31,8 +41,13 @@ public class JwtProvider {
 		try {
 			Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token);
 			return true;
-		}catch (Exception ex) {
-			
+		}catch (ExpiredJwtException err) {
+			new UnauthorizedException("Token Expired. Please login again");
+		}catch(UnsupportedJwtException | MalformedJwtException | SignatureException err ) {
+			new UnauthorizedException("Invalid Token. Please sign in to get valid token");
+		}
+		catch (Exception ex) {
+			logger.error(ex.getMessage());
 		}
 		return false;
 	}

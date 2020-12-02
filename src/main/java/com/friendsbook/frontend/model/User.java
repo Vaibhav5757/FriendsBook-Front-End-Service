@@ -21,9 +21,8 @@ public class User {
 	@Id
 	private int id;
 
-	private String name, password;
-	
-	private String email;
+	private String name, password, email;
+	private boolean isAccountLocked;
 	
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles = new ArrayList<String>();
