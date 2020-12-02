@@ -67,7 +67,7 @@ public class UserService {
 	public ResponseEntity<ApiResponse> login(LoginBody obj){
 		HttpEntity<LoginBody> requestEntity = new HttpEntity<LoginBody>(obj, headers);
 		ResponseEntity<User> response =  this.userSvcHttp.exchange(
-				"https://friendsbook-user-service.herokuapp.com/user/sign-up",
+				"https://friendsbook-user-service.herokuapp.com/user/log-in",
 				HttpMethod.POST,
 				requestEntity,
 				User.class);
