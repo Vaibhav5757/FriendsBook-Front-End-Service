@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class ApplicationInitializer implements CommandLineRunner{
 	
-	@Value("${USER-SERVICE-URL}")
+	@Value("userservice.api.url")
 	String userSeviceUrl;
 	
 	@Value("{eureka.client.service-url.defaultZone")
