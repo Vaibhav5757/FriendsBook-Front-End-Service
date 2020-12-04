@@ -14,7 +14,10 @@ import org.springframework.web.client.RestTemplate;
 public class ApplicationInitializer implements CommandLineRunner{
 	
 	@Value("${USER-SERVICE-URL}")
-	String userSeviceUrl; 
+	String userSeviceUrl;
+	
+	@Value("{eureka.client.service-url.defaultZone")
+	String eurekaServerUrl;
 	
 	@Autowired
 	private RestTemplate http;
@@ -23,9 +26,16 @@ public class ApplicationInitializer implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+		
+		// Wake up Eureka Server
+		ResponseEntity<String> eurekaServerResponse = this.http.exchange(eurekaServerUrl, HttpMethod.GET, null, String.class);
+		if(!eurekaServerResponse.getBody().isEmpty()) {
+			logger.info("Eureka recieved the wake up call");
+		}
+		
 		// Wake up User Service
-		ResponseEntity<String> response = this.http.exchange(userSeviceUrl, HttpMethod.GET, null, String.class);
-		if(!response.getBody().isEmpty()) {
+		ResponseEntity<String> userServiceResponse = this.http.exchange(userSeviceUrl + "/wake-up", HttpMethod.GET, null, String.class);
+		if(!userServiceResponse.getBody().isEmpty()) {
 			logger.info("User Microservice recieved the wake up call");
 		}
 	}
