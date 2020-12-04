@@ -27,17 +27,19 @@ public class ApplicationInitializer implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		// Wake up Eureka Server
-		ResponseEntity<String> eurekaServerResponse = this.http.exchange(eurekaServerUrl, HttpMethod.GET, null, String.class);
-		if(!eurekaServerResponse.getBody().isEmpty()) {
-			logger.info("Eureka recieved the wake up call");
-		}
+		logger.info("here");
 		
-		// Wake up User Service
-		ResponseEntity<String> userServiceResponse = this.http.exchange(userSeviceUrl + "/wake-up", HttpMethod.GET, null, String.class);
-		if(!userServiceResponse.getBody().isEmpty()) {
-			logger.info("User Microservice recieved the wake up call");
-		}
+//		// Wake up Eureka Server
+//		ResponseEntity<String> eurekaServerResponse = this.http.exchange(eurekaServerUrl, HttpMethod.GET, null, String.class);
+//		if(!eurekaServerResponse.getBody().isEmpty()) {
+//			logger.info("Eureka recieved the wake up call");
+//		}
+//		
+//		// Wake up User Service
+//		ResponseEntity<String> userServiceResponse = this.http.exchange(userSeviceUrl + "/wake-up", HttpMethod.GET, null, String.class);
+//		if(!userServiceResponse.getBody().isEmpty()) {
+//			logger.info("User Microservice recieved the wake up call");
+//		}
 	}
 
 }
