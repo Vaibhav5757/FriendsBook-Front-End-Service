@@ -49,6 +49,7 @@ public class ApplicationInitializer implements CommandLineRunner {
 				logger.error("No response from user microservice");
 			}
 		}catch(Exception err) {
+			logger.error("No response from user microservice");
 			logger.error(err.getMessage());
 		}
 		
