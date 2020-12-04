@@ -56,7 +56,7 @@ public class UserService {
 	public ResponseEntity<ApiResponse> createUser(User obj) {
 		HttpEntity<User> requestEntity = new HttpEntity<User>(obj, headers);
 		ResponseEntity<String> response =  this.userSvcHttp.exchange(
-						"https://USER-MICROSERVICE/user/sign-up",
+						"https://User-Microservice/user/sign-up",
 						HttpMethod.POST,
 						requestEntity,
 						String.class);
