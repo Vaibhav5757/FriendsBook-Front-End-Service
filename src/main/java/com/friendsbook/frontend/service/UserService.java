@@ -68,7 +68,7 @@ public class UserService {
 	public ResponseEntity<ApiResponse> login(LoginBody obj){
 		HttpEntity<LoginBody> requestEntity = new HttpEntity<LoginBody>(obj, headers);
 		ResponseEntity<User> response =  this.userSvcHttp.exchange(
-				"https://USER-MICROSERVICE/user/log-in",
+				"https://User-Microservice/user/log-in",
 				HttpMethod.POST,
 				requestEntity,
 				User.class);
