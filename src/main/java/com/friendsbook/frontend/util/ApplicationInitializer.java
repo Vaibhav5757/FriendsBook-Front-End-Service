@@ -11,13 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 @Component
-public class ApplicationInitializer implements CommandLineRunner{
+public class ApplicationInitializer implements CommandLineRunner {
 	
-	@Value("userservice.api.url")
-	String userSeviceUrl;
-	
-	@Value("{eureka.client.service-url.defaultZone")
-	String eurekaServerUrl;
+	@Value("${userservice.api.url}")
+	private String userMicroserviceUrl;
 	
 	@Autowired
 	private RestTemplate http;
@@ -27,19 +24,12 @@ public class ApplicationInitializer implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
-		logger.info("here");
-		
-//		// Wake up Eureka Server
-//		ResponseEntity<String> eurekaServerResponse = this.http.exchange(eurekaServerUrl, HttpMethod.GET, null, String.class);
-//		if(!eurekaServerResponse.getBody().isEmpty()) {
-//			logger.info("Eureka recieved the wake up call");
-//		}
-//		
-//		// Wake up User Service
-//		ResponseEntity<String> userServiceResponse = this.http.exchange(userSeviceUrl + "/wake-up", HttpMethod.GET, null, String.class);
-//		if(!userServiceResponse.getBody().isEmpty()) {
-//			logger.info("User Microservice recieved the wake up call");
-//		}
+		ResponseEntity<String> response = this.http.exchange(userMicroserviceUrl + "/wake-up", HttpMethod.GET, null, String.class);
+		if(response.getBody().equals("Yo, I Woke up!!!")) {
+			logger.info("User Microservice woke up");
+		}else {
+			logger.error("No response from user microservice");
+		}
 	}
 
 }
