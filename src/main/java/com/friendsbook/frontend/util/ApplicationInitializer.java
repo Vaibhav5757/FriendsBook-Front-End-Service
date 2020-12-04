@@ -41,12 +41,17 @@ public class ApplicationInitializer implements CommandLineRunner {
 		headers.set("Authorization","Basic " + userSeviBase64Creds);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
-		ResponseEntity<String> response = this.http.exchange(userMicroserviceUrl + "/wake-up/", HttpMethod.GET, new HttpEntity<Object>(null, headers), String.class);
-		if(response.getBody().equals("Yo, I Woke up!!!")) {
-			logger.info("User Microservice woke up");
-		}else {
-			logger.error("No response from user microservice");
+		try {
+			ResponseEntity<String> response = this.http.exchange(userMicroserviceUrl + "/wake-up/", HttpMethod.GET, new HttpEntity<Object>(null, headers), String.class);
+			if(response.getBody().equals("Yo, I Woke up!!!")) {
+				logger.info("User Microservice woke up");
+			}else {
+				logger.error("No response from user microservice");
+			}
+		}catch(Exception err) {
+			logger.error(err.getMessage());
 		}
+		
 	}
 
 }
