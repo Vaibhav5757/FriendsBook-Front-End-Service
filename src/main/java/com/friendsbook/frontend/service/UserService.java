@@ -34,6 +34,7 @@ public class UserService {
 	
 	private String userSeviceAuthStr, userSeviBase64Creds;
 	
+	@Autowired
 	private RestTemplate userSvcHttp;
 	
 	private HttpHeaders headers;
