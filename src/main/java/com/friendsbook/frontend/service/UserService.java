@@ -56,7 +56,7 @@ public class UserService {
 	public ResponseEntity<ApiResponse> createUser(User obj) {
 		HttpEntity<User> requestEntity = new HttpEntity<User>(obj, headers);
 		ResponseEntity<String> response =  this.userSvcHttp.exchange(
-						"https://User-Microservice/user/sign-up",
+						"http://USER-MICROSERVICE/user/sign-up",
 						HttpMethod.POST,
 						requestEntity,
 						String.class);
@@ -68,7 +68,7 @@ public class UserService {
 	public ResponseEntity<ApiResponse> login(LoginBody obj){
 		HttpEntity<LoginBody> requestEntity = new HttpEntity<LoginBody>(obj, headers);
 		ResponseEntity<User> response =  this.userSvcHttp.exchange(
-				"https://User-Microservice/user/log-in",
+				"http://USER-MICROSERVICE/user/log-in",
 				HttpMethod.POST,
 				requestEntity,
 				User.class);
