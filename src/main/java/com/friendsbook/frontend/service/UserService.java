@@ -54,9 +54,11 @@ public class UserService {
 	
 	// makes a HTTP Request to user service for creating a new User
 	public ResponseEntity<ApiResponse> createUser(User obj) {
-		HttpEntity<User> requestEntity = new HttpEntity<User>(obj, headers);
-		ResponseEntity<String> response = this.userSvcHttp.postForEntity("http://User-Microservice/user/sign-up", requestEntity, String.class);
-		return new ResponseEntity<ApiResponse>(new ApiResponse(response.getBody()), response.getStatusCode());
+		ResponseEntity<String> dummyResp = this.userSvcHttp.getForEntity("http://User-Microservice/wake-up", String.class);
+		return new ResponseEntity<ApiResponse>(new ApiResponse(dummyResp.getBody()), dummyResp.getStatusCode());
+//		HttpEntity<User> requestEntity = new HttpEntity<User>(obj, headers);
+//		ResponseEntity<String> response = this.userSvcHttp.postForEntity("http://User-Microservice/user/sign-up", requestEntity, String.class);
+//		return new ResponseEntity<ApiResponse>(new ApiResponse(response.getBody()), response.getStatusCode());
 	}
 	
 	// creates and returns the JWT token
