@@ -1,6 +1,5 @@
 package com.friendsbook.frontend.service;
 
-import java.net.URI;
 import java.util.Base64;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +11,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -22,6 +20,7 @@ import com.friendsbook.frontend.model.User;
 import com.friendsbook.frontend.security.JwtProvider;
 import com.friendsbook.frontend.util.ApiResponse;
 import com.friendsbook.frontend.util.LoginBody;
+import com.friendsbook.frontend.util.UserServiceClient;
 
 @Service
 public class UserService {
@@ -38,7 +37,12 @@ public class UserService {
 	@Autowired
 	private RestTemplate userSvcHttp;
 	
+	@Autowired
+	private UserServiceClient usrSvcClient;
+	
 	private HttpHeaders headers;
+	
+	private String authString;
 	
 	@Autowired
 	private JwtProvider jwt;
@@ -47,21 +51,19 @@ public class UserService {
 	public void setHeaders() {
 		userSeviceAuthStr = userServiceBasicAuthUsername + ":" + userServiceBasicAuthUserPassword;
 		userSeviBase64Creds = Base64.getEncoder().encodeToString(userSeviceAuthStr.getBytes());
-		headers = new HttpHeaders();
-		headers.set("Authorization","Basic " + userSeviBase64Creds);
-		headers.setContentType(MediaType.APPLICATION_JSON);
+		authString = "Basic " + userSeviBase64Creds;
 	}
 	
 	// makes a HTTP Request to user service for creating a new User
 	public ResponseEntity<ApiResponse> createUser(User obj) {
-		HttpEntity<User> requestEntity = new HttpEntity<User>(obj, headers);
-		URI uri = URI.create("https://User-Microservice/user/sign-up");
-		ResponseEntity<String> response = this.userSvcHttp.exchange(
-				uri,
-				HttpMethod.POST,
-				requestEntity,
-				String.class);
-		return new ResponseEntity<ApiResponse>(new ApiResponse(response.getBody()), response.getStatusCode());
+		try {
+			String response =  this.usrSvcClient.createUser(authString, obj);
+			ApiResponse resp = new ApiResponse(response);
+			return new ResponseEntity<ApiResponse>(resp, HttpStatus.OK);
+		}catch(Exception ex) {
+			logger.error(ex.getMessage());
+		}
+		return null;
 	}
 	
 	// creates and returns the JWT token
