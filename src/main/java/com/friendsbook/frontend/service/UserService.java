@@ -58,6 +58,7 @@ public class UserService {
 	public ResponseEntity<ApiResponse> createUser(User obj) {
 		try {
 			String response =  this.usrSvcClient.createUser(authString, obj);
+			logger.info(response);
 			ApiResponse resp = new ApiResponse(response);
 			return new ResponseEntity<ApiResponse>(resp, HttpStatus.OK);
 		}catch(Exception ex) {
