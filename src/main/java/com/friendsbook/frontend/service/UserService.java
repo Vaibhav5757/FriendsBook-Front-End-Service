@@ -20,7 +20,7 @@ import com.friendsbook.frontend.model.User;
 import com.friendsbook.frontend.security.JwtProvider;
 import com.friendsbook.frontend.util.ApiResponse;
 import com.friendsbook.frontend.util.LoginBody;
-import com.friendsbook.frontend.util.UserServiceClient;
+import com.friendsbook.functional.UserServiceClient;
 
 @Service
 public class UserService {
