@@ -56,7 +56,7 @@ public class UserService {
 	// makes a HTTP Request to user service for creating a new User
 	public ResponseEntity<ApiResponse> createUser(User obj) {
 		HttpEntity<User> requestEntity = new HttpEntity<User>(obj, headers);
-		URI uri = URI.create("https://User-Microservice/user/sign-up");
+		URI uri = URI.create("http://User-Microservice/user/sign-up");
 		ResponseEntity<String> response = this.userSvcHttp.exchange(
 				uri,
 				HttpMethod.POST,
