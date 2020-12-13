@@ -4,14 +4,11 @@ spring:
     username: ${USER_DATABASE_USERNAME}
     password: ${USER_DATABASE_PASSWORD}
     driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME}
+eureka:
+  instance:
+    hostname: ${DOMAIN_NAME}
 userservice:
   api:
     url: ${USER-SERVICE-URL}
     username: ${USER_SERVICE_USERNAME}
     password: ${USER_SERVICE_PASSWORD}
----
-spring:
-  profile: heroku
-eureka:
-  instance:
-    hostname: ${DOMAIN_NAME}
