@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.friendsbook"})
 @EntityScan(basePackages="com.friendsbook")
-@EnableFeignClients
+@EnableFeignClients(basePackages = {"com.friendsbook"})
 public class FriendsBookFrontEndServiceApplication {
 
 	public static void main(String[] args) {
