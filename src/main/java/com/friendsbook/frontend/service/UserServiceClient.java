@@ -9,7 +9,7 @@ import com.friendsbook.frontend.util.UserServiceClientConfiguration;
 import com.friendsbook.frontend.util.UserServiceClientFallback;
 
 @FeignClient(
-	value = "http://User-Microservice/",
+	value = "https://User-Microservice/",
 	fallback = UserServiceClientFallback.class,
 	configuration = UserServiceClientConfiguration.class)
 public interface UserServiceClient {
