@@ -23,7 +23,7 @@ class Custom implements Retryer {
     int attempt;
 
     public Custom() {
-        this(2000, 3);
+        this(2000, 1);
     }
 
     public Custom(long backoff, int maxAttempts) {
