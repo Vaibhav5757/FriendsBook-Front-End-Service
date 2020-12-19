@@ -40,8 +40,9 @@ public class UserController {
 	@PostConstruct
 	public void addHeaderProperties() {
 		String auth = userServiceUsername + ":" + userServicePassword;
-		byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")));
-		String authHeader = "Basic " + new String(encodedAuth);
+//		byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")));
+//		String authHeader = "Basic " + new String(encodedAuth);
+		String authHeader = "Basic " + auth;
 		userServiceHeaders.put("Authorization", authHeader);
 		logger.info(authHeader);
 	}
