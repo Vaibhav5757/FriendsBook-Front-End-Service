@@ -7,8 +7,6 @@ spring:
 eureka:
   instance:
     hostname: ${APP_NAME}.herokuapp.com
-server:
-  port: ${PORT}
 userservice:
   api:
 #    url: ${USER-SERVICE-URL}
