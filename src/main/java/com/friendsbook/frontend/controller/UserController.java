@@ -26,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import com.friendsbook.frontend.model.User;
 import com.friendsbook.frontend.service.UserServiceClient;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -35,7 +36,8 @@ public class UserController {
 	
 	Map<String, String> userServiceHeaders = new HashMap<String, String>();
 	
-	private HttpHeaders headers;
+	// used for restTemplate only in debugging purposes
+	private HttpHeaders userServiceHeadersForRestTemp;
 	
 	@Value("${userservice.api.username}")
 	private String userServiceUsername;
@@ -50,26 +52,19 @@ public class UserController {
 	@PostConstruct
 	public void addHeaderProperties() {
 		String auth = userServiceUsername + ":" + userServicePassword;
-//		byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")));
-//		String authHeader = "Basic " + new String(encodedAuth);
-		String authHeader = "Basic " + auth;
+		byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")));
+		String authHeader = "Basic " + new String(encodedAuth);
 		userServiceHeaders.put("Authorization", authHeader);
 		logger.info(authHeader);
 		
-		headers = new HttpHeaders();
-		headers.setBasicAuth(userServiceUsername, userServicePassword);
+//		headers = new HttpHeaders();
+//		headers.setBasicAuth(userServiceUsername, userServicePassword);
 		
 	}
 	
 	@PostMapping("/sign-up")
-	public ResponseEntity<String> createUser(@RequestBody User obj) throws SocketTimeoutException {
-		return this.userServiceRestTemplate.exchange(
-				"https://User-Microservice/user/sign-up",
-				HttpMethod.POST,
-				new HttpEntity<User>(obj, headers),
-				String.class
-				);
-//		return this.client.createUser(userServiceHeaders,obj);
+	public String createUser(@RequestBody User obj) throws SocketTimeoutException {
+		return this.client.createUser(userServiceHeaders,obj);
 	}
 	
 	@GetMapping("/only-user")
