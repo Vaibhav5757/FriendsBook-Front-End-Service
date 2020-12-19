@@ -7,8 +7,8 @@ spring:
 eureka:
   instance:
     hostname: ${APP_NAME}.herokuapp.com
-#userservice:
-#  api:
+userservice:
+  api:
 #    url: ${USER-SERVICE-URL}
-#    username: ${USER_SERVICE_USERNAME}
-#    password: ${USER_SERVICE_PASSWORD}
+    username: ${USER_SERVICE_USERNAME}
+    password: ${USER_SERVICE_PASSWORD}
