@@ -1,5 +1,7 @@
 package com.friendsbook.frontend.controller;
 
+import java.net.SocketTimeoutException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +20,7 @@ public class UserController {
 	private UserServiceClient client;
 	
 	@PostMapping("/sign-up")
-	public String createUser(@RequestBody User obj) {
+	public String createUser(@RequestBody User obj) throws SocketTimeoutException {
 		return this.client.createUser(obj);
 	}
 	

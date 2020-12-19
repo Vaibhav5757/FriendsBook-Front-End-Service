@@ -7,12 +7,6 @@ spring:
 eureka:
   instance:
     hostname: ${DOMAIN_NAME}
-feign:
-  client:
-    config:
-      default:
-        connectTimeout: 60000
-        readTimeout: 10000 
 userservice:
   api:
     url: ${USER-SERVICE-URL}

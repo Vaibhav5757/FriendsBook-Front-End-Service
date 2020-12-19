@@ -1,5 +1,6 @@
 package com.friendsbook.frontend.util;
 
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +44,12 @@ public class GlobalExceptionHandler {
 	    	sb.append(key + " " + value + ". ");
 	    });
 	    return new ResponseEntity<ApiResponse>(new ApiResponse(sb.toString()), HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(SocketTimeoutException.class)
+	public ResponseEntity<ApiResponse> handleHttpException(SocketTimeoutException err){
+		ApiResponse response = new ApiResponse("Connection Timed out to external service");
+		return new ResponseEntity<ApiResponse>(response, HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
 }
