@@ -64,7 +64,7 @@ public class UserController {
 	@PostMapping("/sign-up")
 	public ResponseEntity<String> createUser(@RequestBody User obj) throws SocketTimeoutException {
 		return this.userServiceRestTemplate.exchange(
-				"https://User-Microservice//user/sign-up",
+				"https://User-Microservice/user/sign-up",
 				HttpMethod.POST,
 				new HttpEntity<User>(obj, headers),
 				String.class
