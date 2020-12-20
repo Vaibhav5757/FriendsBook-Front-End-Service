@@ -1,9 +1,6 @@
 package com.friendsbook.frontend.service;
 
-import java.util.Map;
-
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +15,6 @@ import com.friendsbook.frontend.util.UserServiceClientFallback;
 public interface UserServiceClient {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/user/sign-up", consumes = "application/json")
-	public String createUser(@RequestHeader Map<String, String> headers,User obj);
+	public String createUser(User obj);
 	
 }
