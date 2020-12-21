@@ -6,6 +6,7 @@ spring:
     driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME}
 eureka:
   instance:
+    non-secure-port: 80
     hostname: <appname>.herokuapp.com
 userservice:
   api:
