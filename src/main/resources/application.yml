@@ -6,7 +6,7 @@ spring:
     driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME}
 eureka:
   instance:
-    hostname: ${APP_NAME}.herokuapp.com
+    hostname: <appname>.herokuapp.com
 userservice:
   api:
     username: ${USER_SERVICE_USERNAME}
