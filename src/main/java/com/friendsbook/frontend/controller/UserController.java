@@ -18,6 +18,7 @@ public class UserController {
 	@Autowired
 	private UserServiceClient client;
 	
+	@SuppressWarnings("unused")
 	private Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@PostMapping("/sign-up")
