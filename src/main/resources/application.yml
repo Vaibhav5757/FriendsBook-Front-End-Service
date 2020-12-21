@@ -7,6 +7,7 @@ spring:
 eureka:
   instance:
     hostname: ${DOMAIN_NAME}
+feign:  hystrix:    enabled: true
 userservice:
   api:
     username: ${USER_SERVICE_USERNAME}
