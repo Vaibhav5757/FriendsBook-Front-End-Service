@@ -1,14 +1,14 @@
 spring:
   datasource:
-    url: ${USER_DATABASE_URL}
-    username: ${USER_DATABASE_USERNAME}
-    password: ${USER_DATABASE_PASSWORD}
-    driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME}
+    url: ${USER_DATABASE_URL:jdbc:postgresql://localhost:5432/friends_book}
+    username: ${USER_DATABASE_USERNAME:postgre}
+    password: ${USER_DATABASE_PASSWORD:password}
+    driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME:org.postgresql.Driver}
 eureka:
   instance:
-    hostname: ${DOMAIN_NAME}
+    hostname: ${DOMAIN_NAME:localhost}
 feign:  hystrix:    enabled: true
 userservice:
   api:
-    username: ${USER_SERVICE_USERNAME}
-    password: ${USER_SERVICE_PASSWORD}
+    username: ${USER_SERVICE_USERNAME:user}
+    password: ${USER_SERVICE_PASSWORD:password}
