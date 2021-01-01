@@ -5,16 +5,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.friendsbook.frontend.model.User;
+import com.friendsbook.frontend.util.LoginBody;
 import com.friendsbook.frontend.util.UserServiceClientConfiguration;
-import com.friendsbook.frontend.util.UserServiceClientFallback;
+import com.friendsbook.frontend.util.UserServiceClientFallbackFactory;
 
 @FeignClient(
-	value = "https://friendsbook-user-service/",
-	fallback = UserServiceClientFallback.class,
+	value = "http://user-service/",
+	fallbackFactory = UserServiceClientFallbackFactory.class,
 	configuration = UserServiceClientConfiguration.class)
 public interface UserServiceClient {
 
 	@RequestMapping(method = RequestMethod.POST, value = "/user/sign-up", consumes = "application/json")
 	public String createUser(User obj);
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/user/log-in", consumes = "application/json")
+	public String login(LoginBody obj);
 	
 }

@@ -1,13 +1,18 @@
 spring:
   datasource:
     url: ${USER_DATABASE_URL:jdbc:postgresql://localhost:5432/friends_book}
-    username: ${USER_DATABASE_USERNAME:postgre}
+    username: ${USER_DATABASE_USERNAME:postgres}
     password: ${USER_DATABASE_PASSWORD:password}
     driver-class-name: ${USER_DATABASE_DRIVER_CLASS_NAME:org.postgresql.Driver}
 eureka:
   instance:
     hostname: ${DOMAIN_NAME:localhost}
-feign:  hystrix:    enabled: true
+feign:
+  hystrix:
+    enabled: true
+  client:    config:      default:
+        connectTimeout: 5000
+        readTimeout: 5000
 userservice:
   api:
     username: ${USER_SERVICE_USERNAME:user}

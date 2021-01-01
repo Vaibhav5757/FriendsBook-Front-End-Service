@@ -3,7 +3,6 @@ package com.friendsbook.frontend.security;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
-import javax.servlet.GenericFilter;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -13,17 +12,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.filter.GenericFilterBean;
 
 import com.friendsbook.frontend.model.UserDetails;
 import com.friendsbook.frontend.service.UserDetailsService;
 
-@Component
-public class JWTFilter extends GenericFilter{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4301299811872561102L;
+
+@Component
+public class JWTFilter extends GenericFilterBean{
 	
 	@Autowired
 	private JwtProvider jwt;

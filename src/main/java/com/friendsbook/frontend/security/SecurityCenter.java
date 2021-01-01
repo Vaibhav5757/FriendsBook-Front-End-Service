@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -36,23 +35,13 @@ public class SecurityCenter extends WebSecurityConfigurerAdapter {
 			.logout().disable() // disable logout
 			.csrf().disable() // disable cross site request forgery
 			.cors().disable() // disable cors
-			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER)
+			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeRequests()// authorize requests
-			.antMatchers("/user/sign-up").permitAll()
+			.antMatchers("/user/sign-up", "/user/log-in").permitAll()
 			.antMatchers("/user/*").hasRole("USER")
 			.antMatchers("/admin/*").hasRole("ADMIN")
 			.and()
-			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-			.httpBasic().disable();
-	}
-	
-	// allow these url(s) to be public
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		web
-			.ignoring()
-			.antMatchers("/user/sign-up")
-			.antMatchers("/user/log-in");
+			.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }

@@ -42,8 +42,10 @@ public class JwtProvider {
 			Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token);
 			return true;
 		}catch (ExpiredJwtException err) {
+			logger.error(err.getMessage());
 			new UnauthorizedException("Token Expired. Please login again");
 		}catch(UnsupportedJwtException | MalformedJwtException | SignatureException err ) {
+			logger.error(err.getMessage());
 			new UnauthorizedException("Invalid Token. Please sign in to get valid token");
 		}
 		catch (Exception ex) {

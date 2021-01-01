@@ -21,7 +21,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 	
 	private Collection<? extends GrantedAuthority> authorities;
 	
-	public UserDetails(User obj) {
+	public UserDetails fromUser(User obj) {
 		UserDetails usrDetails = new UserDetails();
 		usrDetails.setUsername(obj.getEmail());
 		usrDetails.setPassword(obj.getPassword());
@@ -29,6 +29,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		usrDetails.setLastPasswordUpdate(obj.getLastPasswordUpdated());
 		// assign authorities
 		usrDetails.setAuthorities(obj.getRoles().stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList()));
+		return usrDetails;
 	}
 
 	/**
