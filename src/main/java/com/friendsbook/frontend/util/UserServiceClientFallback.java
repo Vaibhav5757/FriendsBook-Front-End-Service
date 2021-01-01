@@ -50,4 +50,13 @@ public class UserServiceClientFallback implements UserServiceClient {
 		return "Unable to update to admin";
 	}
 
+	@Override
+	public String changePassword(PasswordChangeBodyForUserService obj) {
+		if(cause instanceof FeignException && ((FeignException) cause).status() == 400) {
+			logger.error(cause.getMessage());
+			return cause.getMessage().split(": ")[1].substring(1).replace("]", "");
+		}
+		return "Unable to change password";
+	}
+
 }

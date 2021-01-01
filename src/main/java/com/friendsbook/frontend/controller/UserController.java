@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +21,8 @@ import com.friendsbook.frontend.security.JwtProvider;
 import com.friendsbook.frontend.service.UserServiceClient;
 import com.friendsbook.frontend.util.ApiResponse;
 import com.friendsbook.frontend.util.LoginBody;
+import com.friendsbook.frontend.util.PasswordChangeBody;
+import com.friendsbook.frontend.util.PasswordChangeBodyForUserService;
 
 @RestController
 @RequestMapping("/user")
@@ -65,4 +69,16 @@ public class UserController {
 		ApiResponse response = new ApiResponse("You are authorized as a user");
 		return new ResponseEntity<ApiResponse>(response,HttpStatus.OK);
 	}
+	
+	@PutMapping("/change-password")
+	public ResponseEntity<ApiResponse> changePassword(@RequestBody PasswordChangeBody obj, @RequestHeader("Authorization") String token) throws SocketTimeoutException {
+		PasswordChangeBodyForUserService temp = new PasswordChangeBodyForUserService(
+					this.jwt.getUsernameFromToken(token.substring(7)),
+					obj.getPassword());
+		ApiResponse response = new ApiResponse(this.client.changePassword(temp));
+		if(response.getMsg().equals("Password Changed Successfully"))// if response was success
+			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
+		else return new ResponseEntity<ApiResponse>(response, HttpStatus.BAD_REQUEST);
+	}
+	
 }
