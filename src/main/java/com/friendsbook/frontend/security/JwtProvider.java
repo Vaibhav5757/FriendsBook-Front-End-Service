@@ -6,10 +6,13 @@ import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.friendsbook.frontend.model.User;
 import com.friendsbook.frontend.util.UnauthorizedException;
+import com.friendsbook.functional.UsersRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -25,13 +28,18 @@ public class JwtProvider {
 	@Value("${jwt.secret}")
 	private String jwtKey;
 	
+	@Autowired
+	private UsersRepository usRepo;
+	
 	private Logger logger = LoggerFactory.getLogger(JwtProvider.class);
 
 	public String generateToken(String email) {
+		Date creation = new Date();
 		Date expirationDate = Date.from(LocalDate.now().plusDays(10).atStartOfDay(ZoneId.systemDefault()).toInstant());// After 10 days token will expire
 		return Jwts
 					.builder()
 					.setSubject(email)
+					.setIssuedAt(creation)
 					.setExpiration(expirationDate)
 					.signWith(SignatureAlgorithm.HS256, jwtKey)
 					.compact();	
@@ -40,6 +48,14 @@ public class JwtProvider {
 	public boolean valiateToken(String token) {
 		try {
 			Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token);
+			
+			// Check if token generated is created after password updated or not
+			// so that token expires on password change/reset
+			Date tokenCreationDate = getIssuedAtDate(token);
+			User usr = this.usRepo.findByEmail(getUsernameFromToken(token));
+			if(tokenCreationDate.before(usr.getLastPasswordUpdated()))
+				return false;
+			
 			return true;
 		}catch (ExpiredJwtException err) {
 			logger.error(err.getMessage());
@@ -57,5 +73,9 @@ public class JwtProvider {
 	public String getUsernameFromToken(String token) {
 		Claims claims = Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody();
 		return claims.getSubject();
+	}
+	
+	public Date getIssuedAtDate(String token) {
+		return Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody().getIssuedAt();
 	}
 }

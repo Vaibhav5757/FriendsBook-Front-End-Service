@@ -31,6 +31,7 @@ public class UserDetails implements org.springframework.security.core.userdetail
 		usrDetails.setAuthorities(obj.getRoles().stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList()));
 		return usrDetails;
 	}
+	
 
 	/**
 	 * 
@@ -39,44 +40,37 @@ public class UserDetails implements org.springframework.security.core.userdetail
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
 		return this.authorities;
 	}
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return this.username;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return !this.locked;
 	}
 
 	// expire password after 90 days
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return this.lastPasswordUpdate.getTime() < (new Date().getTime() - (90 * 24 * 60 * 60 * 1000));
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
