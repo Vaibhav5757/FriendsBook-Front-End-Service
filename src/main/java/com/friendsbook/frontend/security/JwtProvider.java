@@ -25,7 +25,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 @Component
 public class JwtProvider {
 	
-	@Value("${jwt.secret}")
+	@Value("${jwt.secret:qwerttyoasdmakdmasd}")
 	private String jwtKey;
 	
 	@Autowired
