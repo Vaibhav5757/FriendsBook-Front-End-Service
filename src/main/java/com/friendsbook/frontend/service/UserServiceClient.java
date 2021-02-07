@@ -11,8 +11,14 @@ import com.friendsbook.frontend.util.PasswordChangeBodyForUserService;
 import com.friendsbook.frontend.util.UserServiceClientConfiguration;
 import com.friendsbook.frontend.util.UserServiceClientFallbackFactory;
 
+/*
+ * In ideal scenario, the api endpoint for user-microservice should be 
+ * http(s)://user-microservice/ but since I'm deploying the application on Heroku
+ * and Heroku appends '.heroku.com' to Application name, I'm hardcoding the URL here.
+ * If deployed at some other platform, use appropriate endpoint.
+ * */
 @FeignClient(
-	value = "http://user-service/",
+	value = "https://friendsbook-user-service.herokuapp.com/",
 	fallbackFactory = UserServiceClientFallbackFactory.class,
 	configuration = UserServiceClientConfiguration.class)
 public interface UserServiceClient {

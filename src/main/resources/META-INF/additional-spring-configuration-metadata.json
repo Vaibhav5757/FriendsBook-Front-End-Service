@@ -13,5 +13,15 @@
     "name": "hystrix.threadpool.default.core-size",
     "type": "java.lang.String",
     "description": "A description for 'hystrix.threadpool.default.core-size'"
+  },
+  {
+    "name": "postservice.api.username",
+    "type": "java.lang.String",
+    "description": "A description for 'postservice.api.username'"
+  },
+  {
+    "name": "postservice.api.password",
+    "type": "java.lang.String",
+    "description": "A description for 'postservice.api.password'"
   }
 ]}

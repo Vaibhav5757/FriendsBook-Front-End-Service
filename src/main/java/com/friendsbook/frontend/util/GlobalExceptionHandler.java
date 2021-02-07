@@ -57,4 +57,12 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<ApiResponse>(response, HttpStatus.SERVICE_UNAVAILABLE);
 	}
 	
+	@ExceptionHandler(CustomException.class)
+	public ResponseEntity<ApiResponse> handleCustomException(CustomException ex){
+		logger.error(ex.getMsg());
+		ApiResponse response = new ApiResponse(ex.getMsg());
+		return new ResponseEntity<ApiResponse>(response, ex.getStatusCode());
+	}
+	
+	
 }
