@@ -18,6 +18,7 @@ feign:
   client:    config:      default:
         connectTimeout: 5000
         readTimeout: 5000
+ribbon:  eureka:    enabled: true
 userservice:
   api:
     username: ${USER_SERVICE_USERNAME:user}
