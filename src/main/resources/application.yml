@@ -26,6 +26,3 @@ postservice:
   api:
     username: ${POST_SERVICE_USERNAME:user}
     password: ${POST_SERVICE_PASSWORD:password}
-user-microservice:
-  ribbon:
-    listOfServers: https://friendsbook-user-service.herokuapp.com/
