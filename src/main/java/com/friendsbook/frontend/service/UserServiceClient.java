@@ -18,7 +18,7 @@ import com.friendsbook.frontend.util.UserServiceClientFallbackFactory;
  * If deployed at some other platform, use appropriate endpoint.
  * */
 @FeignClient(
-	value = "https://user-microservice/",
+	value = "http://user-microservice/",
 	fallbackFactory = UserServiceClientFallbackFactory.class,
 	configuration = UserServiceClientConfiguration.class)
 public interface UserServiceClient {
