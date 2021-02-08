@@ -1,10 +1,7 @@
 package com.friendsbook.frontend.service;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.zip.Deflater;
-
 import javax.annotation.PostConstruct;
 
 import org.bouncycastle.util.encoders.Base64;
@@ -70,7 +67,7 @@ public class PostService {
 		if(file.getSize() != 0) {
 			String[] split = file.getOriginalFilename().split("\\.");
 		    String ext = split[split.length - 1];
-		    String[] validExtensions = {"jpg","png","jpeg"};
+		    String[] validExtensions = {"jpeg", "jpg", "png"};
 		    if(!Arrays.asList(validExtensions).contains(ext)) {
 		    	throw new CustomException(HttpStatus.BAD_REQUEST, "File Type Invalid. Please use a image type file");
 		    }
@@ -81,7 +78,7 @@ public class PostService {
 		
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("owner", username);
-		map.add("file", compressBytes(file.getBytes()));
+		map.add("file", file.getBytes());
 		map.add("text", text);
 		
 		HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, headers);
@@ -101,29 +98,11 @@ public class PostService {
 		HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, headers);
 		
 		ResponseEntity<Posts[]> temp = this.http.postForEntity("http://post-service/getPosts", entity, Posts[].class);
-		log.info(temp.getBody().toString());
+		for(Posts p: temp.getBody()) {
+			log.info(p.getImage().toString());
+		}
 		return temp.getBody();
 		
 	}
 	
-	public byte[] compressBytes(byte[] data) {
-		Deflater deflater = new Deflater();
-		deflater.setInput(data);
-		deflater.finish();
-		
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-		byte[] buffer = new byte[1024];
-		
-		while (!deflater.finished()) {
-			int count = deflater.deflate(buffer);
-			outputStream.write(buffer, 0, count);
-		}
-		
-		try {
-			outputStream.close();
-		} catch (IOException e) {}
-		
-		return outputStream.toByteArray();
-	}
-
 }
