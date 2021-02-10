@@ -27,5 +27,11 @@ public class User {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles = new ArrayList<String>();
 	
+	@ElementCollection(fetch = FetchType.LAZY)
+	private List<String> following = new ArrayList<String>();
+	
+	@ElementCollection(fetch = FetchType.LAZY)
+	private List<String> followers = new ArrayList<String>();
+	
 	private Date joined, lastPasswordUpdated;
 }

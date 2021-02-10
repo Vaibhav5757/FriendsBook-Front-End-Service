@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.friendsbook.frontend.model.User;
+import com.friendsbook.frontend.util.FollowRequestBody;
 import com.friendsbook.frontend.util.JustEmailBody;
 import com.friendsbook.frontend.util.LoginBody;
 import com.friendsbook.frontend.util.PasswordChangeBodyForUserService;
@@ -28,5 +29,9 @@ public interface UserServiceClient {
 	
 	@RequestMapping(method = RequestMethod.PUT, value = "/user/change-password", consumes = "application/json")
 	public String changePassword(PasswordChangeBodyForUserService obj);
+	
+	@RequestMapping(method = RequestMethod.POST, value = "/user/follow", consumes = "application/json")
+	public String follow(FollowRequestBody obj);
+	
 	
 }

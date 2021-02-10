@@ -20,6 +20,8 @@ import com.friendsbook.frontend.model.User;
 import com.friendsbook.frontend.security.JwtProvider;
 import com.friendsbook.frontend.service.UserServiceClient;
 import com.friendsbook.frontend.util.ApiResponse;
+import com.friendsbook.frontend.util.FollowRequestBody;
+import com.friendsbook.frontend.util.JustEmailBody;
 import com.friendsbook.frontend.util.LoginBody;
 import com.friendsbook.frontend.util.PasswordChangeBody;
 import com.friendsbook.frontend.util.PasswordChangeBodyForUserService;
@@ -75,6 +77,17 @@ public class UserController {
 					obj.getPassword());
 		ApiResponse response = new ApiResponse(this.client.changePassword(temp));
 		if(response.getMsg().equals("Password Changed Successfully"))// if response was success
+			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
+		else return new ResponseEntity<ApiResponse>(response, HttpStatus.BAD_REQUEST);
+	}
+	
+	@PostMapping("/follow")
+	public ResponseEntity<ApiResponse> follow(@RequestHeader("Authorization") String token, @RequestBody JustEmailBody obj) throws SocketTimeoutException {
+		String owner = this.jwt.getUsernameFromToken(token.substring(7));
+		FollowRequestBody temp = new FollowRequestBody(owner, obj.getEmail());
+		
+		ApiResponse response = new ApiResponse(this.client.follow(temp));
+		if(response.getMsg().equals("Followed User Successfully"))// if response was success
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.OK);
 		else return new ResponseEntity<ApiResponse>(response, HttpStatus.BAD_REQUEST);
 	}

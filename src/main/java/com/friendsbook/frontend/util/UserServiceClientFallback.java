@@ -59,4 +59,13 @@ public class UserServiceClientFallback implements UserServiceClient {
 		return "Unable to change password";
 	}
 
+	@Override
+	public String follow(FollowRequestBody obj) {
+		if(cause instanceof FeignException && ((FeignException) cause).status() == 400) {
+			logger.error(cause.getMessage());
+			return cause.getMessage().split(": ")[1].substring(1).replace("]", "");
+		}
+		return "Unable to follow user";
+	}
+
 }
